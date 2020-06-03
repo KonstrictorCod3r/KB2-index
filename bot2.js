@@ -1,10 +1,10 @@
-	const Discord = require('discord.js');
-	const client = new Discord.Client();
-	const auth = require('./auth2.json');
-	const Canvas = require('canvas');
+const Discord = require('discord.js')
+const client = new Discord.Client();
+const auth = require('./auth2.json');
+const Canvas = require('canvas');
 	//var ctx = canvas.getContext("2d");
 
-	client.on('ready', () => {
+client.on('ready', () => {
   	
 	
 	   client.user.setActivity("(insert status here)", {
@@ -14,9 +14,9 @@
 	});
 	console.log(`Logged in as ${client.user.tag}!`);
   
-	});
+});
 
-	client.on('message', message => {
+client.on('message', message => {
 		//GENERAL SETUP =========================================================================
 		const { attachments, content, guild } = message;
 		if(message.channel.type != "dm"){
@@ -165,7 +165,7 @@
 		//SLOTS AND SLOTZ =========================================================================
 
 		var splitMessage = message.content.split(" ");
-			if(splitMessage[0] === '!slots' && message.channel.type != "dm") {
+		if(splitMessage[0] === '!slots' && message.channel.type != "dm") {
 				var i;
 				var slotStr = "";
 				var slotRepeat = splitMessage[1];
@@ -186,7 +186,7 @@
 
 
 
-			if(splitMessage[0] === '!slotz' && message.channel.type != "dm"){
+		if(splitMessage[0] === '!slotz' && message.channel.type != "dm"){
 			var slotZtr = "";
 			var zlotRepeat = splitMessage[1];
 			if (isNaN(zlotRepeat) || zlotRepeat < 2){
@@ -208,7 +208,7 @@
 
 
 
-			if((splitMessage[0] === '!slotz' || splitMessage[0] === '!slots') && message.channel.type == "dm"){
+		if((splitMessage[0] === '!slotz' || splitMessage[0] === '!slots') && message.channel.type == "dm"){
 			message.channel.send("Sorry, Slots is not available in DMs");
 			}
 
@@ -471,11 +471,11 @@
 		array[randomIndex] = temporaryValue;
 	  }
 
-	  return array;
-	}
-	var arr = message.content.split(/ (.+)/)[1].split("");
-	shuffle(arr);
-	message.channel.send(arr.join(""));
+	    return array;
+	    }
+	    var arr = message.content.split(/ (.+)/)[1].split("");
+		shuffle(arr);
+		message.channel.send(arr.join(""));
 
 		}
 
@@ -529,7 +529,7 @@
 
 
 
-	});
+});
 	
 	//});
 
