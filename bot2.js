@@ -22,6 +22,29 @@
 		if(message.channel.type != "dm"){
 		var emojis = message.guild.emojis.cache.map(e=>e.toString());
 		}
+		//HELP PLEASE KEEP UPDATING =============================================================================================================
+		if (message.content === "!help") {
+
+			var cmds1 = "!hi/!hello: Makes the bot say hi>!bye/!goodbye: Makes the bot say goodbye>!meow/!squeak: just do it, it\'s great>!hype/!yay: PogChamp"
+			var cmds2 = ">!sd/!selfdestruct: Initiates the self destruct sequence>!ps/!pscs/!ptest: Discord.js is better than Nitro>!slots: Spin to Win"
+			var cmds3 = ">!minislots: slots but it's cuter>!emote: use any emote from servers the bot is in (do !emote help)>!cmd: Lets you run a discord.js command>!betacmd: Allows usage of commands that don't really do anything (!embed, !task, etc.)"
+			var cmds = cmds1 += cmds2 += cmds3
+
+
+			const eembed = {
+				"color": 0x00cc00,
+				"title":"Komali Bot Commands:",
+				"description": cmds.replace(/>/g, "\n"),
+
+			}
+
+			message.channel.send({ embed: eembed });
+        }
+
+
+
+
+
 
 		//RANDOM COMMANDS =========================================================================
 	
@@ -113,7 +136,10 @@
 			message.delete()
 		}
 
-
+		if (message.content === "!ps") {
+			message.channel.send("<a:ps:710497337893453907>")
+			message.delete()
+        }
 
 
 		if(message.content.startsWith("!ps ")){
@@ -121,7 +147,7 @@
 			var psstr ="";
 			if(isNaN(pstr) || pstr < 1){
 				pstr = 1
-			}
+			}	
 			if(pstr > 75){
 				pstr = 75
 			}
@@ -270,7 +296,7 @@
 
 					"color": 0x00cc00,
 					author: {
-						name: 'Komali Bot 2',
+						name: 'Komali Bot',
 						icon_url: 'https://cdn.discordapp.com/app-icons/702572373261680796/48a86cc96ed8af944505f44765bca6c7.png?size=128',
 						//	url: 'https://discord.js.org',
 						/*"header": {
@@ -397,7 +423,7 @@
 			const eembed = {
 				"color" : col,
 				"author": {
-			name: 'Komali Bot 2',
+			name: 'Komali Bot',
 			icon_url: 'https://cdn.discordapp.com/app-icons/702572373261680796/48a86cc96ed8af944505f44765bca6c7.png?size=128',
 	
 		},
@@ -419,14 +445,14 @@
 				splitMessage[3] = "";
 			}
 			if(splitMessage[1] === "help"){
-			message.channel.send("!emote `emote name` `emote id` `a (only if it is animated)`")
+			message.channel.send("emote `emote name` `emote id` `a (only if it is animated)`")
 			}
-			if(splitMessage[1] !== "help") {
+			if(splitMessage[1] != "help") {
 			message.channel.send("<" + splitMessage[3] + ":" + splitMessage[1] + ":" + splitMessage[2] + ">")
 	}
 	}
 
-
+		//RANDOMIZE =============================================================================
 
 		if(splitMessage[0] === "!randomize"){
 			function shuffle(array) {
@@ -484,7 +510,7 @@
 				},
 				"description":message.content,
 				"footer": {
-					"text" : message.author.tag,
+					"text" : message.author.tag + ", " + message.author.id,
 				}
 
 			}
