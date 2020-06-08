@@ -21,6 +21,7 @@ client.on('ready', () => {
 client.on('message', async message => {
 	//GENERAL SETUP =========================================================================
 	const { attachments, content, guild } = message;
+	var splitMessage = message.content.split(" ");
 	if (message.channel.type != "dm") {
 		var emojis = message.guild.emojis.cache.map(e => e.toString());
 	}
@@ -28,7 +29,7 @@ client.on('message', async message => {
 	if (message.content === "!help") {
 
 		var cmds1 = "!hi/!hello: Makes the bot say hi>!bye/!goodbye: Makes the bot say goodbye>!meow/!squeak: just do it, it\'s great>!cheers: Cheers!>!hype/!yay: PogChamp"
-		var cmds2 = ">!sd/!selfdestruct: Initiates the self destruct sequence>!ps/!pscs/!ptest: Discord.js is better than Nitro>!widepeepo: big pog>!slots: Spin to Win"
+		var cmds2 = ">!sd/!selfdestruct: Initiates the self destruct sequence>!sheikah/!botw: gives your text a cool font (38 character limit)>!ps/!pscs/!ptest: Discord.js is better than Nitro>!widepeepo: big pog>!slots: Spin to Win"
 		var cmds3 = ">!minislots: slots but it's cuter>!megaslots: slots but fat>!emote: use any emote from servers the bot is in (do !emote help)>!cmd: Lets you run a discord.js command>!betacmd: Allows usage of commands that don't really do anything (!embed, !task, etc.)"
 		var cmds = cmds1 += cmds2 += cmds3
 
@@ -52,15 +53,15 @@ client.on('message', async message => {
 			const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'testimage.png');
 			message.channel.send(attachment)
 	}
-	if (message.content === "!megaslots") {
-		const emojiList = message.guild.emojis.cache.map((e, x) => (x));
-		var e1 = emojiList[Math.floor(Math.random() * emojiList.length)]
-		var e1id = 'https://cdn.discordapp.com/emojis/' + e1 + '.png';
-		var e2 = emojiList[Math.floor(Math.random() * emojiList.length)]
-		var e2id = 'https://cdn.discordapp.com/emojis/' + e2 + '.png';
-		var e3 = emojiList[Math.floor(Math.random() * emojiList.length)]
-		var e3id = 'https://cdn.discordapp.com/emojis/' + e3 + '.png';
-		try {
+		if (message.content === "!megaslots") {
+			const emojiList = message.guild.emojis.cache.map((e, x) => (x));
+			var e1 = emojiList[Math.floor(Math.random() * emojiList.length)]
+			var e1id = 'https://cdn.discordapp.com/emojis/' + e1 + '.png';
+			var e2 = emojiList[Math.floor(Math.random() * emojiList.length)]
+			var e2id = 'https://cdn.discordapp.com/emojis/' + e2 + '.png';
+			var e3 = emojiList[Math.floor(Math.random() * emojiList.length)]
+			var e3id = 'https://cdn.discordapp.com/emojis/' + e3 + '.png';
+			try {
 			
 			
 			//console.log(e1.name)
@@ -80,9 +81,57 @@ client.on('message', async message => {
 			//await message.channel.send("****")
 		} catch (err) {
 			message.channel.send("Something went wrong :(")
-        }
-	}
+			}
 
+	}
+	if (splitMessage[0] === "!botwtext" || splitMessage[0] === "!botw") {
+		var textstr = "";
+		if( textstr + message.content.split(/ (.+)/)[1] == "undefined") {
+			textstr == " "
+		}
+		else {
+			textstr = textstr + message.content.split(/ (.+)/)[1];	
+		}
+		var textlength = textstr.length;
+		var width = textlength * 20
+		const canvas = Canvas.createCanvas(1200, 60);
+		//console.log(width)
+		const ctx = canvas.getContext("2d");
+		ctx.font = "50px Hylia Serif Beta";
+		ctx.fillStyle = "white";
+		ctx.lineWidth = 2;
+		ctx.strokeStyle = "#1a7ce2";
+		ctx.strokeText(textstr, 20, 55);
+		ctx.fillText(textstr, 20, 55)
+		
+		const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'testimage.png');
+		message.channel.send(attachment)
+		message.delete({timeout:500})
+    }
+	if (splitMessage[0] === "!sheikahtext" || splitMessage[0] === "!sheikah") {
+		var textstr = "";
+		if (textstr + message.content.split(/ (.+)/)[1] == "undefined") {
+			textstr == " "
+		}
+		else {
+			textstr = textstr + message.content.split(/ (.+)/)[1];
+		}
+		var textlength = textstr.length;
+		var width = textlength * 20
+		const canvas = Canvas.createCanvas(1200, 70);
+		//console.log(width)
+		const ctx = canvas.getContext("2d");
+		ctx.font = "50px Sheikah";
+		ctx.fillStyle = "white";
+		ctx.lineWidth = 2;
+		ctx.strokeStyle = "#1a7ce2";
+		ctx.strokeText(textstr, 20, 55);
+		ctx.fillText(textstr, 20, 55)
+
+		const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'testimage.png');
+		message.channel.send(attachment)
+		message.delete({ timeout: 500 })
+	}
 
 
 		//RANDOM COMMANDS =========================================================================
@@ -205,7 +254,7 @@ client.on('message', async message => {
 		
 		//SLOTS AND SLOTZ =========================================================================
 
-		var splitMessage = message.content.split(" ");
+		
 		if(splitMessage[0] === '!slots' && message.channel.type != "dm") {
 				var i;
 				var slotStr = "";
@@ -487,7 +536,8 @@ client.on('message', async message => {
 				splitMessage[3] = "";
 			}
 			if(splitMessage[1] === "help"){
-			message.channel.send("emote `emote name` `emote id` `a (only if it is animated)`")
+				message.channel.send("emote `emote name` `emote id` `a (only if it is animated)`")
+				message.channel.send("to get the id, do `\\:emote`, then copy and paste that")
 			}
 			if(splitMessage[1] != "help") {
 			message.channel.send("<" + splitMessage[3] + ":" + splitMessage[1] + ":" + splitMessage[2] + ">")
