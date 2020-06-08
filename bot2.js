@@ -1,8 +1,10 @@
 const Discord = require('discord.js')
 const client = new Discord.Client();
+//const { Client, MessageAttachment } = require('discord.js');
+//const client = new Client();
 const auth = require('./auth2.json');
 const Canvas = require('canvas');
-	//var ctx = canvas.getContext("2d");
+
 
 client.on('ready', () => {
   	
@@ -16,33 +18,70 @@ client.on('ready', () => {
   
 });
 
-client.on('message', message => {
-		//GENERAL SETUP =========================================================================
-		const { attachments, content, guild } = message;
-		if(message.channel.type != "dm"){
-		var emojis = message.guild.emojis.cache.map(e=>e.toString());
+client.on('message', async message => {
+	//GENERAL SETUP =========================================================================
+	const { attachments, content, guild } = message;
+	if (message.channel.type != "dm") {
+		var emojis = message.guild.emojis.cache.map(e => e.toString());
+	}
+	//HELP PLEASE KEEP UPDATING =============================================================================================================
+	if (message.content === "!help") {
+
+		var cmds1 = "!hi/!hello: Makes the bot say hi>!bye/!goodbye: Makes the bot say goodbye>!meow/!squeak: just do it, it\'s great>!cheers: Cheers!>!hype/!yay: PogChamp"
+		var cmds2 = ">!sd/!selfdestruct: Initiates the self destruct sequence>!ps/!pscs/!ptest: Discord.js is better than Nitro>!widepeepo: big pog>!slots: Spin to Win"
+		var cmds3 = ">!minislots: slots but it's cuter>!megaslots: slots but fat>!emote: use any emote from servers the bot is in (do !emote help)>!cmd: Lets you run a discord.js command>!betacmd: Allows usage of commands that don't really do anything (!embed, !task, etc.)"
+		var cmds = cmds1 += cmds2 += cmds3
+
+
+		const eembed = {
+			"color": 0x00cc00,
+			"title": "Komali Bot Commands:",
+			"description": cmds.replace(/>/g, "\n"),
+
 		}
-		//HELP PLEASE KEEP UPDATING =============================================================================================================
-		if (message.content === "!help") {
 
-			var cmds1 = "!hi/!hello: Makes the bot say hi>!bye/!goodbye: Makes the bot say goodbye>!meow/!squeak: just do it, it\'s great>!hype/!yay: PogChamp"
-			var cmds2 = ">!sd/!selfdestruct: Initiates the self destruct sequence>!ps/!pscs/!ptest: Discord.js is better than Nitro>!slots: Spin to Win"
-			var cmds3 = ">!minislots: slots but it's cuter>!emote: use any emote from servers the bot is in (do !emote help)>!cmd: Lets you run a discord.js command>!betacmd: Allows usage of commands that don't really do anything (!embed, !task, etc.)"
-			var cmds = cmds1 += cmds2 += cmds3
-
-
-			const eembed = {
-				"color": 0x00cc00,
-				"title":"Komali Bot Commands:",
-				"description": cmds.replace(/>/g, "\n"),
-
-			}
-
-			message.channel.send({ embed: eembed });
+		message.channel.send({ embed: eembed });
+	}
+		//CANVAS STUFF =============================================================================
+		if (message.content === "!widepeepo") { 
+			const canvas = Canvas.createCanvas(800, 200);
+			const ctx = canvas.getContext("2d");
+			var img1 = await Canvas.loadImage('https://cdn.discordapp.com/emojis/691701513155772457.png?v=1');
+			//var img2 = Canvas.loadImage('https://cdn.discordapp.com/emojis/691701513155772457.png?v=1');
+			ctx.drawImage(img1, 0, 0, 800, 200);
+			const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'testimage.png');
+			message.channel.send(attachment)
+	}
+	if (message.content === "!megaslots") {
+		const emojiList = message.guild.emojis.cache.map((e, x) => (x));
+		var e1 = emojiList[Math.floor(Math.random() * emojiList.length)]
+		var e1id = 'https://cdn.discordapp.com/emojis/' + e1 + '.png';
+		var e2 = emojiList[Math.floor(Math.random() * emojiList.length)]
+		var e2id = 'https://cdn.discordapp.com/emojis/' + e2 + '.png';
+		var e3 = emojiList[Math.floor(Math.random() * emojiList.length)]
+		var e3id = 'https://cdn.discordapp.com/emojis/' + e3 + '.png';
+		try {
+			
+			
+			//console.log(e1.name)
+			const canvas = Canvas.createCanvas(1200, 450);
+			const ctx = canvas.getContext("2d");
+			var img1 = await Canvas.loadImage(e1id);
+			var img2 = await Canvas.loadImage(e2id);
+			var img3 = await Canvas.loadImage(e3id);
+			ctx.drawImage(img1, 0, 0, 400, 400);
+			ctx.drawImage(img2, 400, 0, 400, 400);
+			ctx.drawImage(img3, 800, 0, 400, 400);
+			ctx.font = "50px Hylia Serif Beta";
+			ctx.fillStyle = "White";
+			ctx.fillText("PLEASE PLAY AGAIN", 20, 450)
+			const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'testimage.png');
+			message.channel.send(attachment)
+			//await message.channel.send("****")
+		} catch (err) {
+			message.channel.send("Something went wrong :(")
         }
-
-
-
+	}
 
 
 
@@ -69,7 +108,9 @@ client.on('message', message => {
 		if (message.content === '!hype' || message.content === '!yay') {
 			message.channel.send('<:POGGERS:691701513155772457><:POGGERS:691701513155772457><:POGGERS:691701513155772457><:POGGERS:691701513155772457><:POGGERS:691701513155772457><:POGGERS:691701513155772457><:POGGERS:691701513155772457><:POGGERS:691701513155772457>');
 		}
-
+		if (message.content === "!cheers") {
+			message.channel.send(":beers:")
+		}
 		//KB1 COMMANDS ===============================================================================
 		if (message.content === "!squeak") {
 			var pigemotes = ['<:Penelope:709486066427756554>', '<:Posie:709474524403597402>']
@@ -327,7 +368,7 @@ client.on('message', message => {
 				message.channel.send(img);
 				message.delete({ timeout: 1000 });
 			}
-			if (message.splitMessage[1] === "!imgtest") {
+			if (splitMessage[1] === "!imgtest") {
 
 			}
 
@@ -399,7 +440,8 @@ client.on('message', message => {
 			var KomaliId = 327879060443234314;
 			var liorID = 454356237614841870;
 			if (message.author.id == KomaliId || message.author.id == liorID){
-			message.channel.send(message.content.split(/ (.+)/)[1])
+				message.channel.send(message.content.split(/ (.+)/)[1])
+				message.delete();
 				
 			}
 			else{
@@ -487,6 +529,11 @@ client.on('message', message => {
 					var msg = message.content.split(/ (.+)/)[1]
 					client.users.cache.get(splitMessage[1].replace(/[\\<>@#&!]/g, "")).send(msg.split(/ (.+)/)[1]);
 					message.channel.send("Message Sent!")
+					var submission = "";
+					submission = attachments.size ? { files: attachments.array() } : " "
+					if (message.attachments.size > 0) {
+						client.users.cache.get(splitMessage[1].replace(/[\\<>@#&!]/g, "")).send(submission)
+					}
 				} catch (err) {
 					message.channel.send("Invalid Syntax")
 				}
@@ -520,7 +567,7 @@ client.on('message', message => {
     
 			var submission = "";
 			submission = attachments.size ? { files: attachments.array() } : " "
-			if (attachments[0] !== undefined) {
+			if (message.attachments.size > 0) {
 				client.channels.cache.get('716060808886616104').send(submission)
 			}
   
