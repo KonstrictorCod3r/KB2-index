@@ -28,7 +28,7 @@ client.on('message', async message => {
 	//HELP PLEASE KEEP UPDATING =============================================================================================================
 	if (message.content === "!help") {
 
-		var cmds1 = "!hi/!hello: Makes the bot say hi>!bye/!goodbye: Makes the bot say goodbye>!meow/!squeak: just do it, it\'s great>!cheers: Cheers!>!hype/!yay: PogChamp"
+		var cmds1 = "!hi/!hello: Makes the bot say hi>!bye/!goodbye: Makes the bot say goodbye>!meow/!megameow/!squeak: just do it, it\'s great>!cheers: Cheers!>!hype/!yay: PogChamp"
 		var cmds2 = ">!sd/!selfdestruct: Initiates the self destruct sequence>!sheikah/!botw: gives your text a cool font (38 character limit)>!ps/!pscs/!ptest: Discord.js is better than Nitro>!widepeepo: big pog>!slots: Spin to Win"
 		var cmds3 = ">!minislots: slots but it's cuter>!megaslots: slots but fat>!emote: use any emote from servers the bot is in (do !emote help)>!cmd: Lets you run a discord.js command>!betacmd: Allows usage of commands that don't really do anything (!embed, !task, etc.)"
 		var cmds = cmds1 += cmds2 += cmds3
@@ -45,14 +45,23 @@ client.on('message', async message => {
 	}
 		//CANVAS STUFF =============================================================================
 		if (message.content === "!widepeepo") { 
-			const canvas = Canvas.createCanvas(800, 200);
+			const canvas = Canvas.createCanvas(1200, 200);
 			const ctx = canvas.getContext("2d");
-			var img1 = await Canvas.loadImage('https://cdn.discordapp.com/emojis/691701513155772457.png?v=1');
-			//var img2 = Canvas.loadImage('https://cdn.discordapp.com/emojis/691701513155772457.png?v=1');
-			ctx.drawImage(img1, 0, 0, 800, 200);
+			var img1 = await Canvas.loadImage('https://cdn.discordapp.com/emojis/691701513155772457.png?v=1')
+			ctx.drawImage(img1, 0, 0, 1200, 200);
 			const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'testimage.png');
 			message.channel.send(attachment)
 	}
+	if (message.content === "!megameow") {
+		const canvas = Canvas.createCanvas(1200, 1200);
+		const ctx = canvas.getContext("2d");
+		var gatos = ["https://cdn.discordapp.com/emojis/692397952362348546.png", "https://cdn.discordapp.com/emojis/692401472352157787.png", "https://cdn.discordapp.com/emojis/712314876990586880.png"]
+		var img1 = await Canvas.loadImage(gatos[Math.floor(Math.random() * gatos.length)])
+		ctx.drawImage(img1, 0, 0, 1200, 1200);
+		const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'testimage.png');
+		message.channel.send(attachment)
+	}
+
 		if (message.content === "!megaslots") {
 			const emojiList = message.guild.emojis.cache.map((e, x) => (x));
 			var e1 = emojiList[Math.floor(Math.random() * emojiList.length)]
@@ -73,9 +82,9 @@ client.on('message', async message => {
 			ctx.drawImage(img1, 0, 0, 400, 400);
 			ctx.drawImage(img2, 400, 0, 400, 400);
 			ctx.drawImage(img3, 800, 0, 400, 400);
-			ctx.font = "50px Hylia Serif Beta";
+				ctx.font = "bolder 50px Sans";
 			ctx.fillStyle = "White";
-			ctx.fillText("PLEASE PLAY AGAIN", 20, 450)
+			ctx.fillText("PLEASE PLAY AGAIN", 0, 450)
 			const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'testimage.png');
 			message.channel.send(attachment)
 			//await message.channel.send("****")
@@ -84,6 +93,9 @@ client.on('message', async message => {
 			}
 
 	}
+
+	//FONTS ======================================================
+
 	if (splitMessage[0] === "!botwtext" || splitMessage[0] === "!botw") {
 		var textstr = "";
 		if( textstr + message.content.split(/ (.+)/)[1] == "undefined") {
@@ -94,7 +106,7 @@ client.on('message', async message => {
 		}
 		var textlength = textstr.length;
 		var width = textlength * 20
-		const canvas = Canvas.createCanvas(1200, 60);
+		const canvas = Canvas.createCanvas(1200, 70);
 		//console.log(width)
 		const ctx = canvas.getContext("2d");
 		ctx.font = "50px Hylia Serif Beta";
@@ -126,6 +138,29 @@ client.on('message', async message => {
 		ctx.lineWidth = 2;
 		ctx.strokeStyle = "#1a7ce2";
 		ctx.strokeText(textstr, 20, 55);
+		ctx.fillText(textstr, 20, 55)
+
+		const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'testimage.png');
+		message.channel.send(attachment)
+		message.delete({ timeout: 500 })
+	}
+	if (splitMessage[0] === "!font") {
+		var textstr = "";
+		if (textstr + message.content.split(/ (.+)/)[1] == "undefined") {
+			textstr == " "
+		}
+		else {
+			textstr = textstr + message.content.split(/ (.+)/)[1];
+			textstr = textstr.split(/ (.+)/)[1];
+		}
+		var textlength = textstr.length;
+		var width = textlength * 20
+		const canvas = Canvas.createCanvas(1200, 70);
+		//console.log(width)
+		const ctx = canvas.getContext("2d");
+		ctx.font = "50px " + splitMessage[1];
+		ctx.fillStyle = "white";
+		
 		ctx.fillText(textstr, 20, 55)
 
 		const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'testimage.png');
@@ -488,7 +523,8 @@ client.on('message', async message => {
 		if(splitMessage[0] === "!chat"){
 			var KomaliId = 327879060443234314;
 			var liorID = 454356237614841870;
-			if (message.author.id == KomaliId || message.author.id == liorID){
+			var RFid = 708083169831682110;
+			if (message.author.id == KomaliId || message.author.id == liorID || message.author.id == RFid) {
 				message.channel.send(message.content.split(/ (.+)/)[1])
 				message.delete();
 				
