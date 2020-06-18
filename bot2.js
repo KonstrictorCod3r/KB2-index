@@ -4,7 +4,7 @@ const client = new Discord.Client();
 //const client = new Client();
 const auth = require('./auth2.json');
 const Canvas = require('canvas');
-
+const fs = require('fs')
 
 client.on('ready', () => {
   	
@@ -28,9 +28,9 @@ client.on('message', async message => {
 	//HELP PLEASE KEEP UPDATING =============================================================================================================
 	if (message.content === "!help") {
 
-		var cmds1 = "!hi/!hello: Makes the bot say hi>!bye/!goodbye: Makes the bot say goodbye>!meow/!megameow/!squeak: just do it, it\'s great>!cheers: Cheers!>!hype/!yay: PogChamp"
+		var cmds1 = "!hi/!hello: Makes the bot say hi>!bye/!goodbye: Makes the bot say goodbye>!(mega)meow/meow/!squeak: just do it, it\'s great>!cheers: Cheers!>!hype/!yay: PogChamp"
 		var cmds2 = ">!sd/!selfdestruct: Initiates the self destruct sequence>!sheikah/!botw: gives your text a cool font (38 character limit)>!ps/!pscs/!ptest: Discord.js is better than Nitro>!widepeepo: big pog>!slots: Spin to Win"
-		var cmds3 = ">!minislots: slots but it's cuter>!megaslots: slots but fat>!emote: use any emote from servers the bot is in (do !emote help)>!cmd: Lets you run a discord.js command>!betacmd: Allows usage of commands that don't really do anything (!embed, !task, etc.)"
+		var cmds3 = ">!minislots: slots but it's cute>!egypt (do !egypt help)r>!megaslots: slots but fat>!emote: use any emote from servers the bot is in (do !emote help)>!cmd: Lets you run a discord.js command>!betacmd: Allows usage of commands that don't really do anything (!embed, !task, etc.)"
 		var cmds = cmds1 += cmds2 += cmds3
 
 
@@ -42,7 +42,74 @@ client.on('message', async message => {
 		}
 
 		message.channel.send({ embed: eembed });
-	}
+	}   //EGYPT ==================================================================================
+
+	if (splitMessage[0] === "!egypt") {
+		if (splitMessage[1] == "help") {
+			
+			message.channel.send("egypt `emote` `length`")
+		}
+		
+		else /*if (!isNaN(splitMessage[1]))*/ {
+			if (splitMessage[2] == undefined) {
+				splitMessage[2] = " "
+			}
+			var strlength = splitMessage[2].split("")
+		//	console.log(2000 / strlength.length)
+			
+				var length = splitMessage[1];
+				if (isNaN(length) || length < 2) {
+					length = 3
+				}
+
+				var downnum = "";
+				var upnum = "";
+				var testnum1 = "";
+				var testnum2 = "";
+				for (i = 0; i < length; i++) {
+
+					testnum1 = testnum1 + splitMessage[2]
+
+					upnum = upnum + testnum1
+				}
+				for (i = 0; i < length - 1; i++) {
+					testnum2 = testnum2 + splitMessage[2]
+					downnum = testnum2 + downnum
+				}
+				var getlength = (upnum + downnum).split("")
+
+
+
+
+			if (getlength.length > 2000) {
+					message.channel.send("Too many characters: " + getlength.length + " characters is over 2000 characters")
+				}
+				//console.log('step2')
+				else {
+					try {
+					var str = ""
+					var upstr = "";
+					var downstr = "";
+					var finalstr = "";
+					var test = splitMessage[2]
+					for (i = 0; i < length; i++) {
+
+						str = str + test
+
+						upstr = upstr + str + "\n"
+					}
+					for (i = 0; i < length - 1; i++) {
+						finalstr = finalstr + test
+						downstr = finalstr + "\n" + downstr
+					}
+					message.channel.send(upstr + downstr)
+				} catch (e) {
+					message.channel.send("Something went wrong : /")
+
+				}
+			}
+        }
+    }
 		//CANVAS STUFF =============================================================================
 		if (message.content === "!widepeepo") { 
 			const canvas = Canvas.createCanvas(1200, 200);
@@ -57,6 +124,15 @@ client.on('message', async message => {
 		const ctx = canvas.getContext("2d");
 		var gatos = ["https://cdn.discordapp.com/emojis/692397952362348546.png", "https://cdn.discordapp.com/emojis/692401472352157787.png", "https://cdn.discordapp.com/emojis/712314876990586880.png"]
 		var img1 = await Canvas.loadImage(gatos[Math.floor(Math.random() * gatos.length)])
+		ctx.drawImage(img1, 0, 0, 1200, 1200);
+		const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'testimage.png');
+		message.channel.send(attachment)
+	}
+	if (message.content === "!megasqueak") {
+		const canvas = Canvas.createCanvas(1200, 1200);
+		const ctx = canvas.getContext("2d");
+		var piggy = ["https://cdn.discordapp.com/emojis/709486066427756554.png", "https://cdn.discordapp.com/emojis/709474524403597402.png"]
+		var img1 = await Canvas.loadImage(piggy[(Math.floor(Math.random() * piggy.length))])
 		ctx.drawImage(img1, 0, 0, 1200, 1200);
 		const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'testimage.png');
 		message.channel.send(attachment)
@@ -169,8 +245,16 @@ client.on('message', async message => {
 	}
 
 
-		//RANDOM COMMANDS =========================================================================
-	
+	//RANDOM COMMANDS =========================================================================
+	/*if (message.content === "txttest") {
+		fs.readFile(message.attachments, 'utf8', function (err, data) {
+			if (err) {
+				return console.log(err);
+			}
+			console.log(data);
+		});
+
+    }*/
 		if(message.content.includes("<@!702572373261680796>")){
 			message.channel.send("Pinged :0")
 		}
