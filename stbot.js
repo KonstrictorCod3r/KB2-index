@@ -35,11 +35,12 @@ client.on('ready', () => {
 		var splitMessage = message.content.split(' ');
 
 		if (splitMessage[0] === "%chat") {
-			
+
 			if (message.member.roles.cache.has("691659096759205924")) {
+				if (splitMessage.length > 1) {
 				message.channel.send(message.content.split(/ (.+)/)[1])
 				message.delete();
-
+				}
 			}
 			else {
 				message.author.send("Insufficent Permissions for %chat")
