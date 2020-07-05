@@ -3,6 +3,24 @@ const client = new Discord.Client();
 const auth = require('./sttoken.json');
 client.on('ready', () => {
 
+	function shuffle(array) {
+		var currentIndex = array.length, temporaryValue, randomIndex;
+
+		// While there remain elements to shuffle...
+		while (0 !== currentIndex) {
+
+			// Pick a remaining element...
+			randomIndex = Math.floor(Math.random() * currentIndex);
+			currentIndex -= 1;
+
+			// And swap it with the current element.
+			temporaryValue = array[currentIndex];
+			array[currentIndex] = array[randomIndex];
+			array[randomIndex] = temporaryValue;
+		}
+
+		return array;
+	}
 
 	client.user.setActivity("Breath of the Wild", {
 
@@ -12,11 +30,45 @@ client.on('ready', () => {
 
 	console.log(`Logged in as ${client.user.tag}!`)
 	client.on('message', async message => {
+
+
 		var splitMessage = message.content.split(' ');
+
+		if (splitMessage[0] === "%chat") {
+			
+			if (message.member.roles.cache.has("691659096759205924")) {
+				message.channel.send(message.content.split(/ (.+)/)[1])
+				message.delete();
+
+			}
+			else {
+				message.author.send("Insufficent Permissions for %chat")
+			}
+		}
+
+		if (splitMessage[0] == "%ttrando") {
+
+			var users = message.content.split(/ (.+)/)[1].split(" ");
+			//users = users + "a"
+			
+			shuffle(users)
+			//var user = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+			var size = 2; var splitusers = [];
+			for (var i = 0; i < users.length; i += size) {
+				splitusers.push(users.slice(i , i + size));
+			}
+			//console.log(splitusers);
+			message.channel.send(splitusers)
+        }
+
+
+
+		//%COLOR ====================================================
+		
 		if (splitMessage[0] == "%color") {
 			var colors = ["red", "orange", "yellow", "green", "lightblue", "darkblue", "purple", "none"]
 			
-			//var racerrole = message.guild.roles.cache.find(x => x.name.toLowerCase() == "Racer")
+			
 			if ((!message.member.roles.cache.has("691659542244622356"))) {
 				message.channel.send("You have to compete in a task if you want a color! ")
 				return
