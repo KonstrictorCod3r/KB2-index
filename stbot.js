@@ -5,15 +5,9 @@ client.on('ready', () => {
 
 	function shuffle(array) {
 		var currentIndex = array.length, temporaryValue, randomIndex;
-
-		// While there remain elements to shuffle...
 		while (0 !== currentIndex) {
-
-			// Pick a remaining element...
 			randomIndex = Math.floor(Math.random() * currentIndex);
 			currentIndex -= 1;
-
-			// And swap it with the current element.
 			temporaryValue = array[currentIndex];
 			array[currentIndex] = array[randomIndex];
 			array[randomIndex] = temporaryValue;
@@ -33,6 +27,8 @@ client.on('ready', () => {
 		var splitMessage = message.content.split(' ');
 		const { attachments, content, guild } = message;
 
+		//%DM ================================
+		
 		if (splitMessage[0] === "%dm") {
 			if (message.member.roles.cache.has("691659096759205924")) {
 				if (message.channel.id == "729467255141695569") {
@@ -60,7 +56,7 @@ client.on('ready', () => {
 		}
 
 		
-
+                //BOT DMS ===================================================
 		if (message.channel.type === "dm" && message.author.id != "729381032578514982") {
 			const eembed = {
 				"color": 0xbff7ff,
@@ -89,7 +85,9 @@ client.on('ready', () => {
 			}
 
 		}
-
+ 
+		//%CHAT ============================================
+		
 		if (splitMessage[0] === "%chat") {
 
 			if (message.member.roles.cache.has("691659096759205924")) {
@@ -167,7 +165,7 @@ client.on('ready', () => {
 						message.channel.send("Invalid color; do `%color list`")
 					}
 					else {
-						message.channel.send("```Colors Available:\nRed\nOrange\nYellow\nGreen\nLightBlue\nDarkBlue\nPurple```")
+						message.channel.send("```Colors Available:\nRed\nOrange\nYellow\nGreen\nLightBlue\nDarkBlue\nPurple\n\nAlternatively you can do %color none ```")
 					}
 				}
 			}
