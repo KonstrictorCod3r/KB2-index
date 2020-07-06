@@ -1,6 +1,11 @@
 const Discord = require('discord.js')
 const client = new Discord.Client();
 const auth = require('./sttoken.json');
+const shrine0 = "Katosa Aug: Katosa Aug Apparatus>Ze Kasho:Ze Kasho Apparatus>Ka'am Ya'tak: Trial of Power>Rota Ooh: Passing of the Gates>Wahgo Katta: Metal Connections>Bosh Kala: The Wind Guides You>Ha Dahamar: The Water Guides>Hila Rao: Drifting>Ta'loh Naeg: Ta'loh Naeg's Teaching>Ree Dahee: Timing is Critical>Shee Vaneer: Twin Memories>Shee Venath: Twin Memories>Toto Sah: Toto Sah Apparatus"
+const shrine1 = ">Daqa Koh: Stalled Flight>Kayra Mah: Greedy Hill>Mo'a Keet: Metal Makes a Path>Qua Raym: A Balanced Approach>Sah Dahaj: Power of Fire>Shae Mo'sah: Swinging Flames>Shora Hah: Blue Flame>Tah Muhl: Passing the Flame>Kah Yah: Quick Thinking>Shai Utoh: Halt the Tilt>Shoda Sah: Impeccable Timing>Yah Rin: A Weighty Decision>Joloo Nah: Joloo Nah Apparatus>Kuh Takkar: Melting Ice Hazard>Sho Dantu: Two Bombs"
+const shrine2 = ">Ja Baij: Bombs Trial> Keh Namut: Cryonis Trial > Oman Au: Magnesis Trial > Owa Daim: Stasis Trial>Dow Na'eh: Three Boxes>Kam Urog: Trial of Passage>Mezza Lo: Ancient Trifecta>Myahm Agana: Myahm Agana Apparatus>Dunba Taag: Build and Release>Gee Ha'rah: Tandem>Maka Rah: Steady thy Heart>Rin Oyaa: Directing the Wind>Rok Uwog: Power of Reach>Sha Ghema: Shift and Lock>Shada Naw: Red Giveaway"
+const shrine3 = ">﻿Ishto Soh: Bravery's Grasp>Ka'o Makagh: Metal Doors Open the Way>Ya Naga: Shatter the Heavens>Daka Tuss: Sunken Scoop>Kah Mael: Drop And Rise>Kaya Wan: Shields From WaterNe'ez Yohma: Pushing Power>Rucco Maag: Five Flames>Sheh Rata: Speed of Light>Mogg Latan: Synced Swing>Shae Loya: Aim For the Moment>Sheem Dagoze: Moving in Parallel>Toh Yahsa: Buried Secrets>Zalta Wa: Two Orbs to Guide You"
+const shrine4 = ">Akh Va'quot: Windmills>Bareeda Naag: Cannon>Kah Okeo: Wind Guide>Sha Warvo: Path of Hidden Winds>Voo Lota: The Winding Route>Dako Tah: Electric Path>Daqo Chisay: The Whole Picture>Hawa Koth: The Current Solution>Jee Noh: On the Move>Kay Noh: Power of Electricity>Kema Zoos: A Delayed Puzzle>Keo Ruug: Fateful Stars>Mirro Shaz: Tempered Power>Monya Toma: Drawing Parabolas"
 client.on('ready', () => {
 
 	function shuffle(array) {
@@ -27,8 +32,18 @@ client.on('ready', () => {
 		var splitMessage = message.content.split(' ');
 		const { attachments, content, guild } = message;
 
+		if (message.content === "%randomshrine") {
+			var shrines = shrine0 + shrine1 + shrine2 + shrine3 + shrine4;
+			try {
+				shrines = shrines.split('>')
+				message.channel.send(shrines[Math.floor(Math.random() * shrines.length)])
+			} catch (e) {
+				message.channel.send("Something went wrong :\/")
+            }
+        }
+
 		//%DM ================================
-		
+
 		if (splitMessage[0] === "%dm") {
 			if (message.member.roles.cache.has("691659096759205924")) {
 				if (message.channel.id == "729467255141695569") {
@@ -52,11 +67,11 @@ client.on('ready', () => {
 			}
 			else {
 				message.channel.send("Insuffient permissions for %dm")
-            }
+			}
 		}
 
-		
-                //BOT DMS ===================================================
+
+		//BOT DMS ===================================================
 		if (message.channel.type === "dm" && message.author.id != "729381032578514982") {
 			const eembed = {
 				"color": 0xbff7ff,
@@ -85,15 +100,15 @@ client.on('ready', () => {
 			}
 
 		}
- 
+
 		//%CHAT ============================================
-		
+
 		if (splitMessage[0] === "%chat") {
 
 			if (message.member.roles.cache.has("691659096759205924")) {
 				if (splitMessage.length > 1) {
-				message.channel.send(message.content.split(/ (.+)/)[1])
-				message.delete();
+					message.channel.send(message.content.split(/ (.+)/)[1])
+					message.delete();
 				}
 			}
 			else {
@@ -101,25 +116,29 @@ client.on('ready', () => {
 			}
 		}
 
+		//%ttrando =============================
+
 		if (splitMessage[0] == "%ttrando") {
 
-			var users = message.content.split(/ (.+)/)[1].split(" ");
-			//users = users + "a"
-			
+			var users = message.content.split(/ (.+)/)[1].split(" ")
 			shuffle(users)
-			//var user = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
 			var size = 2; var splitusers = [];
 			for (var i = 0; i < users.length; i += size) {
-				splitusers.push(users.slice(i , i + size));
+				splitusers.push(users.slice(i, i + size));
 			}
-			//console.log(splitusers);
-			message.channel.send(splitusers)
-        }
+			var iuser;
+			var endstr = "";
+			for (i = 0; i < splitusers.length; i++) {				
+				iuser = splitusers[i]
+				endstr += "**Team " + (i + 1) + ":** " + iuser.toString().replace(',', " and ") + "\n"
+			}
+			message.channel.send(endstr)
+		}
 
 
 
 		//%COLOR ====================================================
-		
+
 		if (splitMessage[0] == "%color") {
 			if (message.channel.id == "692890692946493490") {
 				var colors = ["red", "orange", "yellow", "green", "lightblue", "darkblue", "purple", "none"]
@@ -171,7 +190,7 @@ client.on('ready', () => {
 			}
 			else {
 				message.channel.send("This command only works in <#692890692946493490>!")
-            }
+			}
 		}
 	});
 });
