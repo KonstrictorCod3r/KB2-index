@@ -1,10 +1,11 @@
 const Discord = require('discord.js')
 const client = new Discord.Client();
+const moment = require('moment')
 const auth = require('./sttoken.json');
 const shrine0 = "Katosa Aug: Katosa Aug Apparatus>Ze Kasho:Ze Kasho Apparatus>Ka'am Ya'tak: Trial of Power>Rota Ooh: Passing of the Gates>Wahgo Katta: Metal Connections>Bosh Kala: The Wind Guides You>Ha Dahamar: The Water Guides>Hila Rao: Drifting>Ta'loh Naeg: Ta'loh Naeg's Teaching>Ree Dahee: Timing is Critical>Shee Vaneer: Twin Memories>Shee Venath: Twin Memories>Toto Sah: Toto Sah Apparatus"
 const shrine1 = ">Daqa Koh: Stalled Flight>Kayra Mah: Greedy Hill>Mo'a Keet: Metal Makes a Path>Qua Raym: A Balanced Approach>Sah Dahaj: Power of Fire>Shae Mo'sah: Swinging Flames>Shora Hah: Blue Flame>Tah Muhl: Passing the Flame>Kah Yah: Quick Thinking>Shai Utoh: Halt the Tilt>Shoda Sah: Impeccable Timing>Yah Rin: A Weighty Decision>Joloo Nah: Joloo Nah Apparatus>Kuh Takkar: Melting Ice Hazard>Sho Dantu: Two Bombs"
 const shrine2 = ">Ja Baij: Bombs Trial> Keh Namut: Cryonis Trial > Oman Au: Magnesis Trial > Owa Daim: Stasis Trial>Dow Na'eh: Three Boxes>Kam Urog: Trial of Passage>Mezza Lo: Ancient Trifecta>Myahm Agana: Myahm Agana Apparatus>Dunba Taag: Build and Release>Gee Ha'rah: Tandem>Maka Rah: Steady thy Heart>Rin Oyaa: Directing the Wind>Rok Uwog: Power of Reach>Sha Ghema: Shift and Lock>Shada Naw: Red Giveaway"
-const shrine3 = ">﻿Ishto Soh: Bravery's Grasp>Ka'o Makagh: Metal Doors Open the Way>Ya Naga: Shatter the Heavens>Daka Tuss: Sunken Scoop>Kah Mael: Drop And Rise>Kaya Wan: Shields From WaterNe'ez Yohma: Pushing Power>Rucco Maag: Five Flames>Sheh Rata: Speed of Light>Mogg Latan: Synced Swing>Shae Loya: Aim For the Moment>Sheem Dagoze: Moving in Parallel>Toh Yahsa: Buried Secrets>Zalta Wa: Two Orbs to Guide You"
+const shrine3 = ">﻿Ishto Soh: Bravery's Grasp>Ka'o Makagh: Metal Doors Open the Way>Ya Naga: Shatter the Heavens>Daka Tuss: Sunken Scoop>Kah Mael: Drop And Rise>Kaya Wan: Shields From Water>Ne'ez Yohma: Pushing Power>Rucco Maag: Five Flames>Sheh Rata: Speed of Light>Mogg Latan: Synced Swing>Shae Loya: Aim For the Moment>Sheem Dagoze: Moving in Parallel>Toh Yahsa: Buried Secrets>Zalta Wa: Two Orbs to Guide You"
 const shrine4 = ">Akh Va'quot: Windmills>Bareeda Naag: Cannon>Kah Okeo: Wind Guide>Sha Warvo: Path of Hidden Winds>Voo Lota: The Winding Route>Dako Tah: Electric Path>Daqo Chisay: The Whole Picture>Hawa Koth: The Current Solution>Jee Noh: On the Move>Kay Noh: Power of Electricity>Kema Zoos: A Delayed Puzzle>Keo Ruug: Fateful Stars>Mirro Shaz: Tempered Power>Monya Toma: Drawing Parabolas"
 client.on('ready', () => {
 
@@ -29,6 +30,7 @@ client.on('ready', () => {
 
 	console.log(`Logged in as ${client.user.tag}!`)
 	client.on('message', async message => {
+		let server = message.guild;
 		var splitMessage = message.content.split(' ');
 		const { attachments, content, guild } = message;
 
@@ -42,7 +44,85 @@ client.on('ready', () => {
             }
         }
 
-		//%DM ================================
+		//%USERINFO ================================
+		if (splitMessage[0] === "%userinfo") {
+			//var user = client.users.cache.get(splitMessage[1].replace(/[\\<>@#&!]/g, ""));
+			let user = message.mentions.users.first();
+			var guilduser = message.guild.member(message.mentions.users.first())
+			//console.log(server.members.fetch(user).roles.cache)
+			var userpresence = user.presence.status
+			if (userpresence == "online") {
+				userpresence = "<:ONLINE:730989151653986316> Online"
+			}
+			if (userpresence == "idle") {
+				userpresence = "<:IDLE:730984100269391892> Idle"
+			}
+			if (userpresence == "dnd") {
+				userpresence = "<:DND:730935210366992504> Do Not Disturb"
+			}
+			if (userpresence === "offline") {
+				userpresence = "<:OFFLINE:730993056689422357> Offline"
+            } 
+			const embed1 = {
+				"color": 0xbff7ff,
+				"author": {
+					name: user.tag,
+					icon_url: user.avatarURL(),
+
+				},
+				fields: [
+					{
+						name: "Joined on:",
+						value: moment.utc(guilduser.joinedAt).format('dddd, MMMM Do YYYY'),
+					},
+					{
+						name: 'User ID:',
+						value: user.id,
+					},
+					{
+						name: 'Status:',
+						value: userpresence,
+					},
+					{
+						name: "Roles:",
+						value: guilduser.roles.cache.map(r => `${r}`).join(' | '),
+                    },
+					]
+			}
+			message.channel.send({ embed: embed1 });
+		}
+
+		//%BOTINFO ===============================
+
+		if (splitMessage[0] === "%botinfo") {
+			
+			const embed1 = {
+				"color": 0xbff7ff,
+				"author": {
+					name: "Shrine Task Bot",
+					icon_url: client.user.avatarURL(),
+
+				},
+				fields: [
+					{
+						name: "Info:",
+						value: "A bot made by Komali and Lior, used in the Shrine Racing/No Major Glitches Individual Levels Server",
+					},
+					{
+						name: "Added on:",
+						value: moment.utc(client.user.joinedAt).format('dddd, MMMM Do YYYY'),
+					},
+					{
+						name: 'Bot ID',
+						value: client.user.id,
+					},
+					
+				]
+			}
+			message.channel.send({ embed: embed1 });
+		}
+		//%DM =======================
+
 
 		if (splitMessage[0] === "%dm") {
 			if (message.member.roles.cache.has("691659096759205924")) {
@@ -105,7 +185,7 @@ client.on('ready', () => {
 
 		if (splitMessage[0] === "%chat") {
 
-			if (message.member.roles.cache.has("691659096759205924")) {
+			if (message.member.roles.cache.has("691659096759205924") || message.author.id === "454356237614841870") {
 				if (splitMessage.length > 1) {
 					message.channel.send(message.content.split(/ (.+)/)[1])
 					message.delete();
