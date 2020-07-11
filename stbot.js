@@ -7,6 +7,10 @@ const shrine1 = ">Daqa Koh: Stalled Flight>Kayra Mah: Greedy Hill>Mo'a Keet: Met
 const shrine2 = ">Ja Baij: Bombs Trial> Keh Namut: Cryonis Trial > Oman Au: Magnesis Trial > Owa Daim: Stasis Trial>Dow Na'eh: Three Boxes>Kam Urog: Trial of Passage>Mezza Lo: Ancient Trifecta>Myahm Agana: Myahm Agana Apparatus>Dunba Taag: Build and Release>Gee Ha'rah: Tandem>Maka Rah: Steady thy Heart>Rin Oyaa: Directing the Wind>Rok Uwog: Power of Reach>Sha Ghema: Shift and Lock>Shada Naw: Red Giveaway"
 const shrine3 = ">﻿Ishto Soh: Bravery's Grasp>Ka'o Makagh: Metal Doors Open the Way>Ya Naga: Shatter the Heavens>Daka Tuss: Sunken Scoop>Kah Mael: Drop And Rise>Kaya Wan: Shields From Water>Ne'ez Yohma: Pushing Power>Rucco Maag: Five Flames>Sheh Rata: Speed of Light>Mogg Latan: Synced Swing>Shae Loya: Aim For the Moment>Sheem Dagoze: Moving in Parallel>Toh Yahsa: Buried Secrets>Zalta Wa: Two Orbs to Guide You"
 const shrine4 = ">Akh Va'quot: Windmills>Bareeda Naag: Cannon>Kah Okeo: Wind Guide>Sha Warvo: Path of Hidden Winds>Voo Lota: The Winding Route>Dako Tah: Electric Path>Daqo Chisay: The Whole Picture>Hawa Koth: The Current Solution>Jee Noh: On the Move>Kay Noh: Power of Electricity>Kema Zoos: A Delayed Puzzle>Keo Ruug: Fateful Stars>Mirro Shaz: Tempered Power>Monya Toma: Drawing Parabolas"
+//KEEP UPDATING THIS ================================================================================
+const cmdlist = "%ttrando `%ttrando user1 user2 ...` (Assigns randomized teams for Team Tasks)>%randomshrine (Prints a random non-DLC puzzle shrine)>%userinfo `%userinfo @user` (Displays info about a user)>%color `%color red/orange/yellow/green/lightblue/darkblue/purple/none` (Used in #colors, Racer only)>%botinfo (Shows this message)>Staff members can see and reply to the bots DMs as well"
+const staffcmdlist = "%dm `%dm @user message` (Used in #bot-commands, DMs a user)>%chat `%chat message` (Makes the bot say stuff)"
+//KEEP UPDATING THIS ================================================================================
 client.on('ready', () => {
 
 	function shuffle(array) {
@@ -19,7 +23,7 @@ client.on('ready', () => {
 			array[randomIndex] = temporaryValue;
 		}
 
-		return array;
+		return array; 
 	}
 
 	client.user.setActivity("Breath of the Wild", {
@@ -41,8 +45,8 @@ client.on('ready', () => {
 				message.channel.send(shrines[Math.floor(Math.random() * shrines.length)])
 			} catch (e) {
 				message.channel.send("Something went wrong :\/")
-            }
-        }
+			}
+		}
 
 		//%USERINFO ================================
 		if (splitMessage[0] === "%userinfo") {
@@ -62,7 +66,7 @@ client.on('ready', () => {
 			}
 			if (userpresence === "offline") {
 				userpresence = "<:OFFLINE:730993056689422357> Offline"
-            } 
+			}
 			const embed1 = {
 				"color": 0xbff7ff,
 				"author": {
@@ -86,8 +90,8 @@ client.on('ready', () => {
 					{
 						name: "Roles:",
 						value: guilduser.roles.cache.map(r => `${r}`).join(' | '),
-                    },
-					]
+					},
+				]
 			}
 			message.channel.send({ embed: embed1 });
 		}
@@ -95,32 +99,74 @@ client.on('ready', () => {
 		//%BOTINFO ===============================
 
 		if (splitMessage[0] === "%botinfo") {
-			
-			const embed1 = {
-				"color": 0xbff7ff,
-				"author": {
-					name: "Shrine Task Bot",
-					icon_url: client.user.avatarURL(),
+			if (message.member.roles.cache.has("691659096759205924")) {
+				const embed1 = {
+					"color": 0xbff7ff,
+					"author": {
+						name: "Shrine Task Bot",
+						icon_url: client.user.avatarURL(),
 
-				},
-				fields: [
-					{
-						name: "Info:",
-						value: "A bot made by Komali and Lior, used in the Shrine Racing/No Major Glitches Individual Levels Server",
 					},
-					{
-						name: "Added on:",
-						value: moment.utc(client.user.joinedAt).format('dddd, MMMM Do YYYY'),
-					},
-					{
-						name: 'Bot ID',
-						value: client.user.id,
-					},
-					
-				]
+					fields: [
+						{
+							name: "Info:",
+							value: "A bot made by Komali and Lior, used in the Shrine Racing/No Major Glitches Individual Levels Server",
+						},
+						{
+							name: "Added on:",
+							value: moment.utc(client.user.joinedAt).format('dddd, MMMM Do YYYY'),
+						},
+						{
+							name: 'Bot ID',
+							value: client.user.id,
+						},
+						{
+							name: 'Commands:',
+							value: "• " + cmdlist.replace(/>/g, "\n• "),
+						},
+						{
+							name: 'Staff Commands:',
+							value: "• " + staffcmdlist.replace(/>/g, "\n• "),
+						},
+
+					]
+				}
+				message.channel.send({ embed: embed1 });
 			}
-			message.channel.send({ embed: embed1 });
-		}
+			else {
+				const embed1 = {
+					"color": 0xbff7ff,
+					"author": {
+						name: "Shrine Task Bot",
+						icon_url: client.user.avatarURL(),
+
+					},
+					fields: [
+						{
+							name: "Info:",
+							value: "A bot made by Komali and Lior, used in the Shrine Racing/No Major Glitches Individual Levels Server",
+						},
+						{
+							name: "Added on:",
+							value: moment.utc(client.user.joinedAt).format('dddd, MMMM Do YYYY'),
+						},
+						{
+							name: 'Bot ID:',
+							value: client.user.id,
+						},
+						{
+							name: 'Commands:',
+							value: "• " + cmdlist.replace(/>/g, "\n• "),
+						},
+
+					]
+				}
+				message.channel.send({ embed: embed1 });
+			}
+		
+		
+	}
+		
 		//%DM =======================
 
 
