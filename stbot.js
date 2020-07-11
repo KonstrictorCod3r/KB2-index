@@ -36,7 +36,7 @@ client.on('ready', () => {
 	client.on('message', async message => {
 
 		if (message.content === "%botcode") {
-			message.channel.send("https://github.com/KonstrictorCod3r/KB2-index/blob/master/stbot.js")
+			message.channel.send("https://github.com/PrinceKomali/js-bot-index/blob/master/stbot.js")
         }
 
 
