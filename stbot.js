@@ -8,7 +8,7 @@ const shrine2 = ">Ja Baij: Bombs Trial> Keh Namut: Cryonis Trial > Oman Au: Magn
 const shrine3 = ">﻿Ishto Soh: Bravery's Grasp>Ka'o Makagh: Metal Doors Open the Way>Ya Naga: Shatter the Heavens>Daka Tuss: Sunken Scoop>Kah Mael: Drop And Rise>Kaya Wan: Shields From Water>Ne'ez Yohma: Pushing Power>Rucco Maag: Five Flames>Sheh Rata: Speed of Light>Mogg Latan: Synced Swing>Shae Loya: Aim For the Moment>Sheem Dagoze: Moving in Parallel>Toh Yahsa: Buried Secrets>Zalta Wa: Two Orbs to Guide You"
 const shrine4 = ">Akh Va'quot: Windmills>Bareeda Naag: Cannon>Kah Okeo: Wind Guide>Sha Warvo: Path of Hidden Winds>Voo Lota: The Winding Route>Dako Tah: Electric Path>Daqo Chisay: The Whole Picture>Hawa Koth: The Current Solution>Jee Noh: On the Move>Kay Noh: Power of Electricity>Kema Zoos: A Delayed Puzzle>Keo Ruug: Fateful Stars>Mirro Shaz: Tempered Power>Monya Toma: Drawing Parabolas"
 //KEEP UPDATING THIS ================================================================================
-const cmdlist = "%ttrando `%ttrando user1 user2 ...` (Assigns randomized teams for Team Tasks)>%randomshrine (Prints a random non-DLC puzzle shrine)>%userinfo `%userinfo @user` (Displays info about a user)>%color `%color red/orange/yellow/green/lightblue/darkblue/purple/none` (Used in #colors, Racer only)>%botinfo (Shows this message)>Staff members can see and reply to the bots DMs as well"
+const cmdlist = "%ttrando `%ttrando user1 user2 ...` (Assigns randomized teams for Team Tasks)>%randomshrine (Prints a random non-DLC puzzle shrine)>%userinfo `%userinfo @user` (Displays info about a user)>%color `%color red/orange/yellow/green/lightblue/darkblue/purple/none` (Used in #colors, Racer only)>%botinfo (Shows this message)>%botcode (Prints a link to the bot's code file)>Staff members can see and reply to the bots DMs as well"
 const staffcmdlist = "%dm `%dm @user message` (Used in #bot-commands, DMs a user)>%chat `%chat message` (Makes the bot say stuff)"
 //KEEP UPDATING THIS ================================================================================
 client.on('ready', () => {
@@ -34,6 +34,13 @@ client.on('ready', () => {
 
 	console.log(`Logged in as ${client.user.tag}!`)
 	client.on('message', async message => {
+
+		if (message.content === "%botcode") {
+			message.channel.send("https://github.com/KonstrictorCod3r/KB2-index/blob/master/stbot.js")
+        }
+
+
+
 		let server = message.guild;
 		var splitMessage = message.content.split(' ');
 		const { attachments, content, guild } = message;
