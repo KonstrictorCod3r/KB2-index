@@ -48,16 +48,25 @@ client.on('ready', () => {
 				var channel = splitMessage[1].replace(/[<>:#]/gi, "");
 				channel = client.channels.cache.get(channel);
 				var messageid = splitMessage[2]
-				var emote = splitMessage[3];
-				emote =	emote.replace(/[<>:abcdefghijklmnopqrstuvwxyz]/gi, "")
-					
+				
+
 				//console.log(emote)
-				try {
-					//console.log(channel)
+				if (splitMessage[2]) {	
+				//if (typeof splitMessage[2] !== "undefined" && splitMessage[2] && splitMessage[2] !== null) {
+					
 					const m = await channel.messages.fetch(messageid)
-					m.react(emote);
-					message.channel.send("Reaction added!")
-				} catch (e) { message.channel.send("Invalid Syntax, please check you have the right channel and ID");}
+					try {
+						var emote = splitMessage[3];
+						emote = emote.replace(/[<>:abcdefghijklmnopqrstuvwxyz]/gi, "")
+						
+						var emotetest = client.emojis.cache.get(splitMessage[2])
+						 await m.react(emote);
+						 await message.channel.send("Reaction added!")
+					} catch (e) { message.channel.send("Invalid Syntax, please check the command again"); }
+				}
+				else {
+					message.channel.send("Please provide an emote")
+                }
 			}
 			else {
 				message.channel.send("Insufficient Permissions")
@@ -68,7 +77,7 @@ client.on('ready', () => {
 
 		if (splitMessage[0] === "%randomshrine") {
 			var shrines = shrine0 + shrine1 + shrine2 + shrine3 + shrine4;
-			if (splitMessage[1].toLowerCase() == "dlc") {
+			if (splitMessage[1] == "dlc") {
 				shrines = shrines + shrineDLC;
             }
 			try {
