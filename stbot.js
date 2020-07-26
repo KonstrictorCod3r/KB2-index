@@ -9,7 +9,9 @@ const shrine3 = ">﻿Ishto Soh: Bravery's Grasp>Ka'o Makagh: Metal Doors Open th
 const shrine4 = ">Akh Va'quot: Windmills>Bareeda Naag: Cannon>Kah Okeo: Wind Guide>Sha Warvo: Path of Hidden Winds>Voo Lota: The Winding Route>Dako Tah: Electric Path>Daqo Chisay: The Whole Picture>Hawa Koth: The Current Solution>Jee Noh: On the Move>Kay Noh: Power of Electricity>Kema Zoos: A Delayed Puzzle>Keo Ruug: Fateful Stars>Mirro Shaz: Tempered Power>Monya Toma: Drawing Parabolas"
 const shrineDLC = ">Etsu Korima: Path of Light>Rohta Chigah: Stop to Start>Ruvo Korbah: A Major Test of Strength +>Yowaka Ita: Collected Soul	>Kamia Omuna: Moving Targets>Rinu Honika: Block the Blaze>Sharo Lun: Blind Spots>Kee Dafunia: The Melting Point>Mah Eliya: Secret Stairway>Sato Koda: Support and Guidance>Kiah Toza: Master the Orb>Noe Rajee: The Four Winds>Shira Gomar: Aim for Stillness>Keive Tala: Big or Small>Kihiroh Moh: Inside the Box>Takama Shiri: Dual Purpose";
 //KEEP UPDATING THIS ================================================================================
-const cmdlist = "%ttrando `%ttrando user1 user2 ...` (Assigns randomized teams for Team Tasks)>%randomshrine (Prints a random shrine; adding `dlc` aftetr `%randomshrine` will include DLC shrines)>%userinfo `%userinfo @user` (Displays info about a user)>%color `%color red/orange/yellow/green/lightblue/darkblue/purple/none` (Used in #colors, Racer only)>%botinfo (Shows this message)>%botcode (Prints a link to the bot's code file)>Staff members can see and reply to the bots DMs as well"
+const cmdlist0 = "%ttrando `%ttrando user1 user2 ...` (Assigns randomized teams for Team Tasks)>%randomshrine (Prints a random shrine; adding `dlc` aftetr `%randomshrine` will include DLC shrines)>%userinfo `%userinfo @user` (Displays info about a user)>%color `%color/%colour red/orange/yellow/green/lightblue/darkblue/purple/none` (Used in #colors, Racer only)"
+const cmdlist1 = ">%botinfo (Shows this message)>%botcode (Prints a link to the bot's code file)>Staff members can see and reply to the bots DMs as well>%slots `%slots #` (Spin to win!)"
+const cmdlist = cmdlist0 + cmdlist1;
 const staffcmdlist = "%dm `%dm @user message` (Used in #bot-commands, DMs a user)>%chat `%chat message` (Makes the bot say stuff)>%react `%react #channel messageid emote` (Reacts to any message)"
 //KEEP UPDATING THIS ================================================================================
 client.on('ready', () => {
@@ -41,8 +43,30 @@ client.on('ready', () => {
 
 		if (message.content === "%botcode") {
 			message.channel.send("https://github.com/PrinceKomali/js-bot-index/blob/master/stbot.js")
-        }
-
+		}
+		//%SLOTS =================================================================================
+		if (splitMessage[0] === '%slots') {
+			if (message.channel.id == "692405333846655017") {
+				var emojis = message.guild.emojis.cache.map(e => e.toString());
+				var i;
+				var slotStr = "";
+				var slotRepeat = splitMessage[1];
+				if (isNaN(slotRepeat) || slotRepeat < 2) {
+					slotRepeat = 3;
+				}
+				if (slotRepeat > 60) {
+					slotRepeat = 60;
+				}
+				for (i = 0; i < slotRepeat; i++) {
+					slotStr = slotStr + emojis[Math.floor(Math.random() * emojis.length)]
+				}
+				message.channel.send(slotStr)
+				message.channel.send("Please Play Again!");
+			}
+			else {
+				message.channel.send("Please only use this in <#692405333846655017>!")
+            }
+		}
 		if (splitMessage[0] === "%react") {
 			if (message.member.roles.cache.has("691659096759205924") || message.author.id === "454356237614841870") {
 				var channel = splitMessage[1].replace(/[<>:#]/gi, "");
@@ -149,7 +173,7 @@ client.on('ready', () => {
 
 		//%BOTINFO ===============================
 
-		if (splitMessage[0] === "%botinfo") {
+		if (splitMessage[0] === "%botinfo" || message.content === "%help") {
 			if (message.member.roles.cache.has("691659096759205924")) {
 				const embed1 = {
 					"color": 0xbff7ff,
@@ -324,58 +348,83 @@ client.on('ready', () => {
 
 		//%COLOR ====================================================
 
-		if (splitMessage[0] == "%color") {
+		if (splitMessage[0] == "%color" || splitMessage[0] == "%colour") {
 			if (message.channel.id == "692890692946493490") {
-				var colors = ["red", "orange", "yellow", "green", "lightblue", "darkblue", "purple", "none"]
-
-
-				if ((!message.member.roles.cache.has("691659542244622356"))) {
-					message.channel.send("You have to compete in a task if you want a color! ")
-					return
+				//LIOR ====================================
+				if (message.author.id === "454356237614841870") {
+					try {
+						liorrole = message.guild.roles.cache.get("729467412994457656")
+						liorrole.setColor(splitMessage[1])
+						message.channel.send("Color updated for <@" + message.author.id + ">!")
+					} catch (e) {
+						message.channel.send("Invalid Syntax")
+						console.log(e)
+					}
 				}
-				if (message.content === "%color blue") {
-					message.channel.send("Please use `!color darkblue` or `color lightblue`")
-				}
+				//EVERYONE ELSE ===================================
 				else {
+					var colors = ["red", "orange", "yellow", "green", "lightblue", "darkblue", "purple"]
 
-					if (colors.includes(splitMessage[1])) {
-						var colorrole = message.guild.roles.cache.find(x => x.name.toLowerCase() == splitMessage[1])
-						if (message.member.roles.cache.has(colorrole.id)) {
-							message.channel.send("You already have that color!")
-						}
-						else {
-							var i;
-							var colorcycle;
-							var cycleid;
-							for (i = 0; i < colors.length; i++) {
-								colorcycle = colors[i]
 
-								cycleid = message.guild.roles.cache.find(x => x.name.toLowerCase() == colorcycle)
-								if (message.member.roles.cache.has(cycleid.id)) {
-									message.member.roles.remove(cycleid.id)
-								}
-							}
+					if ((!message.member.roles.cache.has("691659542244622356"))) {
+						message.channel.send("You have to compete in a task if you want a color! ")
+						return
+					}
+					if (message.content === "%color blue") {
+						message.channel.send("Please use `!color darkblue` or `color lightblue`")
+					}
+					if (message.content === "%color none") {
+						for (i = 0; i < colors.length; i++) {
+							colorcycle = colors[i]
 
-							message.member.roles.add(colorrole)
-							if (splitMessage[1] == "none") {
+							cycleid = message.guild.roles.cache.find(x => x.name.toLowerCase() == colorcycle)
+							if (message.member.roles.cache.has(cycleid.id)) {
+								message.member.roles.remove(cycleid.id)
 								message.channel.send("Removed color from <@" + message.author.id + ">!")
 							}
-							else {
-								message.channel.send("Assigned " + splitMessage[1] + " color to <@" + message.author.id + ">!")
-							}
+
 						}
 					}
-					else if (splitMessage[1] !== "list") {
-						message.channel.send("Invalid color; do `%color list`")
-					}
 					else {
-						message.channel.send("```Colors Available:\nRed\nOrange\nYellow\nGreen\nLightBlue\nDarkBlue\nPurple\n\nAlternatively you can do %color none ```")
+
+						if (colors.includes(splitMessage[1])) {
+							var colorrole = message.guild.roles.cache.find(x => x.name.toLowerCase() == splitMessage[1])
+							if (message.member.roles.cache.has(colorrole.id)) {
+								message.channel.send("You already have that color!")
+							}
+							else {
+								var i;
+								var colorcycle;
+								var cycleid;
+								for (i = 0; i < colors.length; i++) {
+									colorcycle = colors[i]
+
+									cycleid = message.guild.roles.cache.find(x => x.name.toLowerCase() == colorcycle)
+									if (message.member.roles.cache.has(cycleid.id)) {
+										message.member.roles.remove(cycleid.id)
+									}
+								}
+
+
+								message.member.roles.add(colorrole)
+
+								message.channel.send("Assigned " + splitMessage[1] + " color to <@" + message.author.id + ">!")
+
+							}
+						}
+						else if (splitMessage[1] !== "list") {
+							message.channel.send("Invalid color; do `%color list`")
+						}
+						else {
+							message.channel.send("```Colors Available:\nRed\nOrange\nYellow\nGreen\nLightBlue\nDarkBlue\nPurple\n\nAlternatively you can do %color none ```")
+						}
 					}
 				}
 			}
 			else {
-				message.channel.send("This command only works in <#692890692946493490>!")
-			}
+					message.channel.send("This command only works in <#692890692946493490>!")
+				}
+			
 		}
 	});
 });
