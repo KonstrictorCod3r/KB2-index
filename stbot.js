@@ -13,6 +13,7 @@ const cmdlist0 = "%ttrando `%ttrando user1 user2 ...` (Assigns randomized teams 
 const cmdlist1 = ">%botinfo (Shows this message)>%botcode (Prints a link to the bot's code file)>Staff members can see and reply to the bots DMs as well>%slots `%slots #` (Spin to win!)"
 const cmdlist = cmdlist0 + cmdlist1;
 const staffcmdlist = "%dm `%dm @user message` (Used in #bot-commands, DMs a user)>%chat `%chat message` (Makes the bot say stuff)>%react `%react #channel messageid emote` (Reacts to any message)"
+const ytdl = require('ytdl-core')
 //KEEP UPDATING THIS ================================================================================
 client.on('ready', () => {
 
@@ -43,6 +44,26 @@ client.on('ready', () => {
 
 		if (message.content === "%botcode") {
 			message.channel.send("https://github.com/PrinceKomali/js-bot-index/blob/master/stbot.js")
+		}
+		//%YTDL ==================================================================================
+		if (splitMessage[0] === "%ytdl") {
+			try {
+				const vid = ytdl(splitMessage[1], { filter: format => format.container === 'mp4' })
+				const info = await ytdl.getInfo(splitMessage[1]);
+				const format = ytdl.chooseFormat(info.formats, { quality: 'highest' });
+				const ytembed = {
+					"color": 0xbff7ff,
+					fields: [
+						{
+							name: "Youtube Downloader",
+							value: "[Click Here](" + format.url + ")",
+						},
+					],
+				}
+				message.channel.send({ embed: ytembed });
+			} catch (e) { message.channel.send("An error occured"); console.log(e) }
+
+
 		}
 		//%SLOTS =================================================================================
 		if (splitMessage[0] === '%slots') {
