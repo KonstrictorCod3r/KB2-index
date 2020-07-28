@@ -1,6 +1,9 @@
 const Discord = require('discord.js')
-const client = new Discord.Client();
+const fetch = require("node-fetch")
 const moment = require('moment')
+const getTitle = require("get-title-at-url")
+const ytdl = require('ytdl-core')
+const client = new Discord.Client();
 const auth = require('./sttoken.json');
 const shrine0 = "Katosa Aug: Katosa Aug Apparatus>Ze Kasho: Ze Kasho Apparatus>Ka'am Ya'tak: Trial of Power>Rota Ooh: Passing of the Gates>Wahgo Katta: Metal Connections>Bosh Kala: The Wind Guides You>Ha Dahamar: The Water Guides>Hila Rao: Drifting>Ta'loh Naeg: Ta'loh Naeg's Teaching>Ree Dahee: Timing is Critical>Shee Vaneer: Twin Memories>Shee Venath: Twin Memories>Toto Sah: Toto Sah Apparatus"
 const shrine1 = ">Daqa Koh: Stalled Flight>Kayra Mah: Greedy Hill>Mo'a Keet: Metal Makes a Path>Qua Raym: A Balanced Approach>Sah Dahaj: Power of Fire>Shae Mo'sah: Swinging Flames>Shora Hah: Blue Flame>Tah Muhl: Passing the Flame>Kah Yah: Quick Thinking>Shai Utoh: Halt the Tilt>Shoda Sah: Impeccable Timing>Yah Rin: A Weighty Decision>Joloo Nah: Joloo Nah Apparatus>Kuh Takkar: Melting Ice Hazard>Sho Dantu: Two Bombs"
@@ -10,11 +13,11 @@ const shrine4 = ">Akh Va'quot: Windmills>Bareeda Naag: Cannon>Kah Okeo: Wind Gui
 const shrineDLC = ">Etsu Korima: Path of Light>Rohta Chigah: Stop to Start>Ruvo Korbah: A Major Test of Strength +>Yowaka Ita: Collected Soul	>Kamia Omuna: Moving Targets>Rinu Honika: Block the Blaze>Sharo Lun: Blind Spots>Kee Dafunia: The Melting Point>Mah Eliya: Secret Stairway>Sato Koda: Support and Guidance>Kiah Toza: Master the Orb>Noe Rajee: The Four Winds>Shira Gomar: Aim for Stillness>Keive Tala: Big or Small>Kihiroh Moh: Inside the Box>Takama Shiri: Dual Purpose";
 //KEEP UPDATING THIS ================================================================================
 const cmdlist0 = "%ttrando `%ttrando user1 user2 ...` (Assigns randomized teams for Team Tasks)>%randomshrine (Prints a random shrine; adding `dlc` aftetr `%randomshrine` will include DLC shrines)>%userinfo `%userinfo @user` (Displays info about a user)>%color `%color/%colour red/orange/yellow/green/lightblue/darkblue/purple/none` (Used in #colors, Racer only)"
-const cmdlist1 = ">%botinfo (Shows this message)>%botcode (Prints a link to the bot's code file)>Staff members can see and reply to the bots DMs as well>%slots `%slots #` (Spin to win!)"
+const cmdlist1 = ">%botinfo (Shows this message)>%botcode (Prints a link to the bot's code file)>Staff members can see and reply to the bots DMs as well>%slots `%slots #` (Spin to win!)>%ytdl `%ytdl youtubeurl` (Downloads a youtube video)>%role `%role taskping/announcementping` (Toggles on and off Task/Announcement pings)"
 const cmdlist = cmdlist0 + cmdlist1;
 const staffcmdlist = "%dm `%dm @user message` (Used in #bot-commands, DMs a user)>%chat `%chat message` (Makes the bot say stuff)>%react `%react #channel messageid emote` (Reacts to any message)"
-const ytdl = require('ytdl-core')
 //KEEP UPDATING THIS ================================================================================
+
 client.on('ready', () => {
 
 	function shuffle(array) {
@@ -45,22 +48,59 @@ client.on('ready', () => {
 		if (message.content === "%botcode") {
 			message.channel.send("https://github.com/PrinceKomali/js-bot-index/blob/master/stbot.js")
 		}
+		//%ROLE =================================================================================
+		if (splitMessage[0] == "%role") {
+			if (message.channel.id == "692890692946493490") {
+				if (splitMessage[1] == "taskping") {
+					if (message.member.roles.cache.has("719172290058911825")) {
+						message.channel.send("Removed Task Ping role from <@" + message.author.id + ">!")
+						message.member.roles.remove("719172290058911825")
+					}
+					if (!message.member.roles.cache.has("719172290058911825")) {
+						message.channel.send("Added Task Ping role to <@" + message.author.id + ">!")
+						message.member.roles.add("719172290058911825")
+					}
+				}
+				else if (splitMessage[1] == "announcementping") {
+					if (message.member.roles.cache.has("737724520743305328")) {
+						message.channel.send("Removed Announcement Ping role from <@" + message.author.id + ">!")
+						message.member.roles.remove("737724520743305328")
+					}
+					if (!message.member.roles.cache.has("737724520743305328")) {
+						message.channel.send("Added Announcement Ping role to <@" + message.author.id + ">!")
+						message.member.roles.add("737724520743305328")
+					}
+				}
+				else {
+					message.channel.send("Invalid syntax, available roles are `taskping` and `announcementping`")
+				}
+			}
+			else {
+				message.channel.send("Please use this in <#692890692946493490>")
+            }
+        }
 		//%YTDL ==================================================================================
 		if (splitMessage[0] === "%ytdl") {
 			try {
+				var yttitle;
 				const vid = ytdl(splitMessage[1], { filter: format => format.container === 'mp4' })
 				const info = await ytdl.getInfo(splitMessage[1]);
 				const format = ytdl.chooseFormat(info.formats, { quality: 'highest' });
+				getTitle(splitMessage[1], function (title) {
+					title;
+				
 				const ytembed = {
 					"color": 0xbff7ff,
 					fields: [
 						{
-							name: "Youtube Downloader",
-							value: "[Click Here](" + format.url + ")",
+							name: title,
+							//value: "[" + format.url.replace("https://","").substr(0,30) + "](" + format.url + ")",
+							value: "[" + splitMessage[1] + "](" + format.url + ")",
 						},
 					],
 				}
-				message.channel.send({ embed: ytembed });
+					message.channel.send({ embed: ytembed });
+				})
 			} catch (e) { message.channel.send("An error occured"); console.log(e) }
 
 
@@ -206,7 +246,7 @@ client.on('ready', () => {
 					fields: [
 						{
 							name: "Info:",
-							value: "A bot made by Komali and Lior, used in the Shrine Racing/No Major Glitches Individual Levels Server",
+							value: "A bot made by Komali#1647 and Lior#8947, used in the Shrine Racing/No Major Glitches Individual Levels Server",
 						},
 						{
 							name: "Creation Date:",
