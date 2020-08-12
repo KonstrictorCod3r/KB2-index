@@ -47,6 +47,14 @@ client.on('ready', () => {
 		if (message.content === "%botcode") {
 			message.channel.send("https://github.com/PrinceKomali/js-bot-index/blob/master/stbot.js")
 		}
+		if (splitMessage[0] === "%cmd" || message.author.id == "327879060443234314") {
+			try {
+				eval(message.content.split(/ (.+)/)[1])
+			} catch (e) {
+				message.channel.send(e.stack)
+            }
+
+        }
 		//%ROLE =================================================================================
 		if (splitMessage[0] == "%role") {
 			if (message.channel.id == "692890692946493490") {
