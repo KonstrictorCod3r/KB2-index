@@ -47,7 +47,7 @@ client.on('ready', () => {
 		if (message.content === "%botcode") {
 			message.channel.send("https://github.com/PrinceKomali/js-bot-index/blob/master/stbot.js")
 		}
-		if (splitMessage[0] === "%cmd" || message.author.id == "327879060443234314") {
+		if (splitMessage[0] === "%cmd" && message.author.id == "327879060443234314") {
 			try {
 				eval(message.content.split(/ (.+)/)[1])
 			} catch (e) {
@@ -58,7 +58,7 @@ client.on('ready', () => {
 		//%ROLE =================================================================================
 		if (splitMessage[0] == "%role") {
 			if (message.channel.id == "692890692946493490") {
-				if (splitMessage[1] == "taskping") {
+			%c	if (splitMessage[1] == "taskping") {
 					if (message.member.roles.cache.has("719172290058911825")) {
 						message.channel.send("Removed Task Ping role from <@" + message.author.id + ">!")
 						message.member.roles.remove("719172290058911825")
