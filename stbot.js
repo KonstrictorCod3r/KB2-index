@@ -2,7 +2,11 @@ const Discord = require('discord.js')
 const moment = require('moment')
 const getTitle = require("get-title-at-url")
 const ytdl = require('ytdl-core')
+const fetch = require('node-fetch')
 const client = new Discord.Client();
+const SRClevels = require("./SRCAPI/levels.json")
+const SRCvariables = require("./SRCAPI/variables.json")
+const SRCshrines = require("./SRCAPI/shrines.json")
 const auth = require('./sttoken.json');
 const shrine0 = "Katosa Aug: Katosa Aug Apparatus>Ze Kasho: Ze Kasho Apparatus>Ka'am Ya'tak: Trial of Power>Rota Ooh: Passing of the Gates>Wahgo Katta: Metal Connections>Bosh Kala: The Wind Guides You>Ha Dahamar: The Water Guides>Hila Rao: Drifting>Ta'loh Naeg: Ta'loh Naeg's Teaching>Ree Dahee: Timing is Critical>Shee Vaneer: Twin Memories>Shee Venath: Twin Memories>Toto Sah: Toto Sah Apparatus"
 const shrine1 = ">Daqa Koh: Stalled Flight>Kayra Mah: Greedy Hill>Mo'a Keet: Metal Makes a Path>Qua Raym: A Balanced Approach>Sah Dahaj: Power of Fire>Shae Mo'sah: Swinging Flames>Shora Hah: Blue Flame>Tah Muhl: Passing the Flame>Kah Yah: Quick Thinking>Shai Utoh: Halt the Tilt>Shoda Sah: Impeccable Timing>Yah Rin: A Weighty Decision>Joloo Nah: Joloo Nah Apparatus>Kuh Takkar: Melting Ice Hazard>Sho Dantu: Two Bombs"
@@ -12,25 +16,33 @@ const shrine4 = ">Akh Va'quot: Windmills>Bareeda Naag: Cannon>Kah Okeo: Wind Gui
 const shrineDLC = ">Etsu Korima: Path of Light>Rohta Chigah: Stop to Start>Ruvo Korbah: A Major Test of Strength +>Yowaka Ita: Collected Soul	>Kamia Omuna: Moving Targets>Rinu Honika: Block the Blaze>Sharo Lun: Blind Spots>Kee Dafunia: The Melting Point>Mah Eliya: Secret Stairway>Sato Koda: Support and Guidance>Kiah Toza: Master the Orb>Noe Rajee: The Four Winds>Shira Gomar: Aim for Stillness>Keive Tala: Big or Small>Kihiroh Moh: Inside the Box>Takama Shiri: Dual Purpose";
 //KEEP UPDATING THIS ================================================================================
 const cmdlist0 = "%ttrando `%ttrando user1 user2 ...` (Assigns randomized teams for Team Tasks)>%randomshrine (Prints a random shrine; adding `dlc` aftetr `%randomshrine` will include DLC shrines)>%userinfo `%userinfo @user` (Displays info about a user)>%color `%color/%colour red/orange/yellow/green/lightblue/darkblue/purple/none` (Used in #colors, Racer only)"
-const cmdlist1 = ">%botinfo (Shows this message)>%botcode (Prints a link to the bot's code file)>Staff members can see and reply to the bots DMs as well>%slots `%slots #` (Spin to win!)>%ytdl `%ytdl youtubeurl` (Downloads a youtube video)>%role `%role taskping/announcementping` (Toggles on and off Task/Announcement pings)"
+const cmdlist1 = ">%botinfo (Shows this message)>%botcode (Prints a link to the bot's code file)>Staff members can see and reply to the bots DMs as well>%slots `%slots #` (Spin to win!)>%ytdl `%ytdl youtubeurl` (Downloads a youtube video)>%role `%role taskping/announcementping` (Toggles on and off Task/Announcement pings)>%wr `%wr (shrine) (any%/100%)` (Shows the World Record for a Shrine)"
 const cmdlist = cmdlist0 + cmdlist1;
 const staffcmdlist = "%dm `%dm @user message` (Used in #bot-commands, DMs a user)>%chat `%chat message` (Makes the bot say stuff)>%react `%react #channel messageid emote` (Reacts to any message)"
 //KEEP UPDATING THIS ================================================================================
-
-client.on('ready', () => {
-
-	function shuffle(array) {
-		var currentIndex = array.length, temporaryValue, randomIndex;
-		while (0 !== currentIndex) {
-			randomIndex = Math.floor(Math.random() * currentIndex);
-			currentIndex -= 1;
-			temporaryValue = array[currentIndex];
-			array[currentIndex] = array[randomIndex];
-			array[randomIndex] = temporaryValue;
-		}
-
-		return array; 
+function initialCap(string) {
+	string = string.split(" ")
+	for (i = 0; i < string.length; i++) {
+		firstChar = string[i].charAt(0);
+		string[i] = string[i].replace(firstChar, firstChar.toUpperCase());
+		//credit for the above 2 lines goes to HairyOtter07
 	}
+	string = string.join(" ")
+	return string
+}
+function shuffle(array) {
+	var currentIndex = array.length, temporaryValue, randomIndex;
+	while (0 !== currentIndex) {
+		randomIndex = Math.floor(Math.random() * currentIndex);
+		currentIndex -= 1;
+		temporaryValue = array[currentIndex];
+		array[currentIndex] = array[randomIndex];
+		array[randomIndex] = temporaryValue;
+	}
+
+	return array;
+}
+client.on('ready', () => {
 
 	client.user.setActivity("Breath of the Wild", {
 
@@ -47,7 +59,7 @@ client.on('ready', () => {
 		if (message.content === "%botcode") {
 			message.channel.send("https://github.com/PrinceKomali/js-bot-index/blob/master/stbot.js")
 		}
-		if (splitMessage[0] === "%cmd" && message.author.id == "327879060443234314") {
+		if (splitMessage[0] == "%cmd" && message.author.id == "327879060443234314") {
 			try {
 				eval(message.content.split(/ (.+)/)[1])
 			} catch (e) {
@@ -58,7 +70,7 @@ client.on('ready', () => {
 		//%ROLE =================================================================================
 		if (splitMessage[0] == "%role") {
 			if (message.channel.id == "692890692946493490") {
-			%c	if (splitMessage[1] == "taskping") {
+				if (splitMessage[1] == "taskping") {
 					if (message.member.roles.cache.has("719172290058911825")) {
 						message.channel.send("Removed Task Ping role from <@" + message.author.id + ">!")
 						message.member.roles.remove("719172290058911825")
@@ -412,7 +424,111 @@ client.on('ready', () => {
 			message.channel.send(endstr)
 		}
 
+		//%WR =========================================================================================================================================
+		if (splitMessage[0] == "%wr") {
+			var category = "824mrqg2"
+			if (splitMessage[3] == "100" || splitMessage[3] == "100%") {
+				category = "9d8jg53k"
+			}
+			var input = splitMessage.splice(1, 2).join("_")
+			try {
+				var shrine = SRCshrines[input].id
+				var region = SRCvariables[SRCshrines[input].region]
+				var level = SRClevels[SRCshrines[input].region]
+				var dispRegion = (SRCshrines[input].region).replace("_", " ")
+				var dlc = ["revisit", "daruk", "mipha", "revali", "urbosa"]
+				if (dlc.includes(dispRegion)) {
+					if (dispRegion == "revisit") {
+						dispRegion = "Great Plateau Revisit Shrines"
+					} else {
+						dispRegion = dispRegion + "\'s Song Shrines"
+					}
+				}
+				else {
+					dispRegion = dispRegion + " tower region"
+				}
+				var dispShrine = (input.replace("_", " "))
+				
+				fetch("https://www.speedrun.com/api/v1/leaderboards/76rqjqd8/level/" + level + "/" + category + "?var-" + region + "=" + shrine).then(res => res.json())
+					.then(res => {
+						//console.log(res.data.runs[0].run)
+						try {
+							var userURI = res.data.runs[0].run.players[0].uri //we have to do another fetch to get the name
+							var time = res.data.runs[0].run.times.primary_t.toFixed(3)
+							if (time >= 60) {
+								var m = Math.floor(time / 60)
+								var s = time % 60
+								if (s >= 10) {
+									time = m + ":" + s.toFixed(3)
+								} else {
+									time = m + ":0" + s.toFixed(3)
+								}
 
+							}
+							var weblink = res.data.runs[0].run.weblink
+							var runDesc = res.data.runs[0].run.comment
+							var submissionDate = (res.data.runs[0].run.submitted).substring(0, 10)
+							// console.log(submissionDate)
+							var verifierURI = res.data.runs[0].run.status.examiner
+							var verificationDate = res.data.runs[0].run.status['verify-date'].substring(0, 10)
+							// console.log(verificationDate)
+							if (runDesc == null) {
+								runDesc = "No Description Entered"
+							} else {
+								runDesc = "" + runDesc
+							}
+							fetch(userURI).then(res => res.json())
+								.then(res => {
+									var user = res.data.names.international
+									var userCountry = ""
+									if (res.data.location != null) {
+										userCountry = res.data.location.country.code
+										user = " :flag_" + userCountry + ": " + user
+									}
+
+
+									fetch("https://www.speedrun.com/api/v1/users/" + verifierURI).then(res => res.json())
+										.then(res => {
+											var verifier = res.data.names.international
+											var verifierCountry = ""
+											if (res.data.location != null) {
+												verifierCountry = res.data.location.country.code
+												verifier = " :flag_" + verifierCountry + ": " + verifier
+											}
+
+											const embed1 = {
+												"color": 0xbff7ff,
+												/*"author": {
+													"name": "Speedrun.com",
+													"icon_url":"https://www.speedrun.com/themes/Default/1st.png"
+												},*/
+												"title": initialCap(dispShrine) + " (" + initialCap(dispRegion) + ")",
+												"description": "[World Record is **" + time + "** by " + user + "](" + weblink + ")\nSubmitted on " + submissionDate + "\nVerified by " + verifier + " on " + verificationDate,
+												fields: [
+													{
+														"name": "Run Description",
+														"value": runDesc
+													},
+												],
+
+
+											}
+											message.channel.send({ embed: embed1 })
+
+
+										})
+
+
+								})
+
+						} catch (err) {
+							message.channel.send("No Run Exists for this Category!")
+						}
+					})
+			} catch (err) {
+				message.channel.send("Please Specify a Valid Shrine")
+			}
+		}
 
 		//%COLOR ====================================================
 
