@@ -1,0 +1,351 @@
+{
+	"katosa_aug": {
+		"region": "akkala",
+		"id": "21gek5ml"
+	},
+	"ze_kasho": {
+		"region": "akkala",
+		"id": "jqzvo9ml"
+	},
+	"kaam_yatak": {
+		"region": "central",
+		"id": "jqzvowgl"
+	},
+	"rota_ooh": {
+		"region": "central",
+		"id": "gq79yovl"
+	},
+	"wahgo_katta": {
+		"region": "central",
+		"id": "klrj892q"
+	},
+	"bosh_kala": {
+		"region": "dueling_peaks",
+		"id": "4qy5km41"
+	},
+	"ha_dahamar": {
+		"region": "dueling_peaks",
+		"id": "5q82n3gq"
+	},
+	"hila_rao": {
+		"region": "dueling_peaks",
+		"id": "klrj8djq"
+	},
+	"taloh_naeg": {
+		"region": "dueling_peaks",
+		"id": "21dvpn41"
+	},
+	"ree_dahee": {
+		"region": "dueling_peaks",
+		"id": "mlndg701"
+	},
+	"shee_vaneer": {
+		"region": "dueling_peaks",
+		"id": "9qjwpoe1"
+	},
+	"shee_venath": {
+		"region": "dueling_peaks",
+		"id": "jq6y8w31"
+	},
+	"toto_sah": {
+		"region": "dueling_peaks",
+		"id": "81002yw1"
+	},
+	"daqa_koh": {
+		"region": "eldin",
+		"id": "0q5xdmm1"
+	},
+	"kayra_mah": {
+		"region": "eldin",
+		"id": "zqomzgp1"
+	},
+	"moa_keet": {
+		"region": "eldin",
+		"id": "013wzjdq"
+	},
+	"qua_raym": {
+		"region": "eldin",
+		"id": "5lm87ejq"
+	},
+	"sah_dahaj": {
+		"region": "eldin",
+		"id": "5le3p05q"
+	},
+	"shae_mosah": {
+		"region": "eldin",
+		"id": "4lx0mk2l"
+	},
+	"shora_hah": {
+		"region": "eldin",
+		"id": "81we6jo1"
+	},
+	"tah_muhl": {
+		"region": "eldin",
+		"id": "rqv6j07l"
+	},
+	"kah_yah": {
+		"region": "faron",
+		"id": "mlndgv01"
+	},
+	"shai_utoh": {
+		"region": "faron",
+		"id": "5q82nvgq"
+	},
+	"shoda_sah": {
+		"region": "faron",
+		"id": "4qy5k241"
+	},
+	"yah_rin": {
+		"region": "faron",
+		"id": "21dvp841"
+	},
+	"joloo_nah": {
+		"region": "gerudo",
+		"id": "81002nw1"
+	},
+	"kuh_takkar": {
+		"region": "gerudo",
+		"id": "9qjwpme1"
+	},
+	"sho_dantu": {
+		"region": "gerudo",
+		"id": "jq6y8o31"
+	},
+	"ja_baij": {
+		"region": "great_plateau",
+		"id": "5lm873jq"
+	},
+	"keh_namut": {
+		"region": "great_plateau",
+		"id": "81we62o1"
+	},
+	"oman_au": {
+		"region": "great_plateau",
+		"id": "zqomzep1"
+	},
+	"owa_daim": {
+		"region": "great_plateau",
+		"id": "013wzkdq"
+	},
+	"dow_naeh": {
+		"region": "hateno",
+		"id": "0q5xdwm1"
+	},
+	"kam_urog": {
+		"region": "hateno",
+		"id": "4lx0m22l"
+	},
+	"mezza_lo": {
+		"region": "hateno",
+		"id": "rqv6j27l"
+	},
+	"myahm_agana": {
+		"region": "hateno",
+		"id": "5le3py5q"
+	},
+	"dunba_taag": {
+		"region": "hebra",
+		"id": "814krm0l"
+	},
+	"gee_harah": {
+		"region": "hebra",
+		"id": "21gekznl"
+	},
+	"maka_rah": {
+		"region": "hebra",
+		"id": "gq79ymvl"
+	},
+	"rin_oyaa": {
+		"region": "hebra",
+		"id": "z1950e0q"
+	},
+	"rok_uwog": {
+		"region": "hebra",
+		"id": "p12ogj7l"
+	},
+	"sha_ghema": {
+		"region": "hebra",
+		"id": "xqk9pwn1"
+	},
+	"shada_naw": {
+		"region": "hebra",
+		"id": "81p4rkg1"
+	},
+	"ishto_soh": {
+		"region": "hebra",
+		"id": "jqzvozgl"
+	},
+	"kao_makagh": {
+		"region": "lake",
+		"id": "klrj8ojq"
+	},
+	"ya_naga": {
+		"region": "lake",
+		"id": "21dvpx41"
+	},
+	"daka_tuss": {
+		"region": "lanayru",
+		"id": "5le3p75q"
+	},
+	"kah_mael": {
+		"region": "lanayru",
+		"id": "81we6xo1"
+	},
+	"kaya_wan": {
+		"region": "lanayru",
+		"id": "4lxx3v3l"
+	},
+	"neez_yohma": {
+		"region": "lanayru",
+		"id": "013wzndq"
+	},
+	"rucco_maag": {
+		"region": "lanayru",
+		"id": "zqomz6p1"
+	},
+	"sheh_rata": {
+		"region": "lanayru",
+		"id": "rqv6j57l"
+	},
+	"mogg_latan": {
+		"region": "ridgeland",
+		"id": "z1950o0q"
+	},
+	"shae_loya": {
+		"region": "ridgeland",
+		"id": "0q5xdjm1"
+	},
+	"sheem_dagoze": {
+		"region": "ridgeland",
+		"id": "814kr00l"
+	},
+	"toh_yahsa": {
+		"region": "ridgeland",
+		"id": "4lx0m72l"
+	},
+	"zalta_wa": {
+		"region": "ridgeland",
+		"id": "p12ogy7l"
+	},
+	"akh_vaquot": {
+		"region": "tabantha",
+		"id": "jqzvoogl"
+	},
+	"bareeda_naag": {
+		"region": "tabantha",
+		"id": "81p4rmg1"
+	},
+	"kah_okeo": {
+		"region": "tabantha",
+		"id": "21gekknl"
+	},
+	"sha_warvo": {
+		"region": "tabantha",
+		"id": "xqk9pyn1"
+	},
+	"voo_lota": {
+		"region": "tabantha",
+		"id": "gq79yyvl"
+	},
+	"dako_tah": {
+		"region": "wasteland",
+		"id": "21dvpp41"
+	},
+	"daqo_chisay": {
+		"region": "wasteland",
+		"id": "013v7dkl"
+	},
+	"hawa_koth": {
+		"region": "wasteland",
+		"id": "mlndgg01"
+	},
+	"jee_noh": {
+		"region": "wasteland",
+		"id": "5q82nngq"
+	},
+	"kah_noh": {
+		"region": "wasteland",
+		"id": "4qy5kk41"
+	},
+	"kema_zoos": {
+		"region": "wasteland",
+		"id": "klrj88jq"
+	},
+	"keo_ruug": {
+		"region": "woodland",
+		"id": "9qjwppe1"
+	},
+	"mirro_shaz": {
+		"region": "woodland",
+		"id": "jq6y8831"
+	},
+	"monya_toma": {
+		"region": "woodland",
+		"id": "810022w1"
+	},
+	"etsu_kormia": {
+		"region": "revisit",
+		"id": "rqv4k9rq"
+	},
+	"rohta_chigah": {
+		"region": "revisit",
+		"id": "zqoy8951"
+	},
+	"ruvo_korbah": {
+		"region": "revisit",
+		"id": "013voprl"
+	},
+	"yowaka_ita": {
+		"region": "revisit",
+		"id": "81wmv9mq"
+	},
+	"kamina_omuna": {
+		"region": "daruk",
+		"id": "0q5o9p71"
+	},
+	"rinu_honika": {
+		"region": "daruk",
+		"id": "5lek65ml"
+	},
+	"sharo_lun": {
+		"region": "daruk",
+		"id": "4lxxv93l"
+	},
+	"kee_dafunia": {
+		"region": "mipha",
+		"id": "814x5peq"
+	},
+	"mah_eliya": {
+		"region": "mipha",
+		"id": "z194jkyl"
+	},
+	"sato_koda": {
+		"region": "mipha",
+		"id": "p1256pd1"
+	},
+	"kiah_toza": {
+		"region": "revali",
+		"id": "81p732v1"
+	},
+	"noe_rajee": {
+		"region": "revali",
+		"id": "xqkrg5d1"
+	},
+	"shira_gomar": {
+		"region": "revali",
+		"id": "gq7nvpp1"
+	},
+	"keive_tala": {
+		"region": "urbosa",
+		"id": "21gjw561"
+	},
+	"kihiro_moh": {
+		"region": "urbosa",
+		"id": "klrze9o1"
+	},
+	"takama_shiri": {
+		"region": "urbosa",
+		"id": "jqz6r921"
+	}
+}
+	
