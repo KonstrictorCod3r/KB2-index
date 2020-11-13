@@ -1,3 +1,4 @@
+//Update: Add NMG
 const Discord = require('discord.js')
 const moment = require('moment')
 const getTitle = require("get-title-at-url")
@@ -430,6 +431,9 @@ client.on('ready', () => {
 			if (splitMessage[3] == "100" || splitMessage[3] == "100%") {
 				category = "9d8jg53k"
 			}
+			if (splitMessage[3].toLowerCase() == "nmg") {
+				category = "zd3op4nd"
+            }
 			var input = splitMessage.splice(1, 2).join("_")
 			try {
 				var shrine = SRCshrines[input].id
